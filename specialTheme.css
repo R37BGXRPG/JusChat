@@ -1,0 +1,22 @@
+/* specialTheme.css */
+
+.frosted-glass-effect {
+  /* This is the main body background for the frosted glass effect */
+  background: rgba(var(--bg-rgb), 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px); /* For Safari */
+}
+
+/* This targets specific elements to make them transparent */
+.frosted-glass-effect .settings-container,
+.frosted-glass-effect .user-item {
+  background: rgba(var(--box-bg-rgb), 0.5); /* Use transparent background for frosted effect */
+  border: 1px solid rgba(var(--border-color-rgb), 0.3);
+  box-shadow: 0 4px 20px rgba(var(--shadow-rgb), 0.1);
+}
+
+/* A helper class to ensure text is readable on transparent backgrounds */
+.frosted-glass-effect .user-name {
+  color: var(--text);
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}

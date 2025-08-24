@@ -1,0 +1,47 @@
+/* themes.css */
+
+/* Purple Theme (Default) */
+:root {
+  --bg: #f8f9fa;
+  --box-bg: #ffffff;
+  --text: #343a40;
+  --accent: #6f42c1; /* A nice purple color */
+  --border-color: #e9ecef;
+  --shadow: rgba(0, 0, 0, 0.05);
+}
+
+/* Dark Theme */
+[data-theme='dark'] {
+  --bg: #1e1e1e;
+  --box-bg: #2d2d2d;
+  --text: #e0e0e0;
+  --accent: #5e9bff;
+  --border-color: #3e3e3e;
+  --shadow: rgba(0, 0, 0, 0.2);
+}
+
+/* White Theme */
+[data-theme='white'] {
+  --bg: #f0f0f0;
+  --box-bg: #ffffff;
+  --text: #212529;
+  --accent: #007bff;
+  --border-color: #e9ecef;
+  --shadow: rgba(0, 0, 0, 0.05);
+}
+
+/* Base font declaration */
+:root {
+  --font: 'Segoe UI', Arial, sans-serif;
+}
+
+/* Font themes */
+[data-font='Poppins'] {
+  --font: 'Poppins', sans-serif;
+}
+[data-font='Montserrat'] {
+  --font: 'Montserrat', sans-serif;
+}
+[data-font='Segoe UI'] {
+  --font: 'Segoe UI', Arial, sans-serif;
+}
