@@ -1,2 +1,2 @@
 # JusChat
-Made for chatting
+ Made for chatting
