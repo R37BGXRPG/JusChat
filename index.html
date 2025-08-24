@@ -150,5 +150,28 @@
     </div>
   </div>
   <script src="script.js"></script>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyA7OMNG2gHH2ZHhfQoWTbB6w5ZYaFCjBk8",
+    authDomain: "juschat-2a8a6.firebaseapp.com",
+    projectId: "juschat-2a8a6",
+    storageBucket: "juschat-2a8a6.firebasestorage.app",
+  messagingSenderId: "16171982663",
+  appId: "1:16171982663:web:13cbcac9ffe732454a3662",
+  measurementId: "G-25RE5GTR3D"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  onAuthStateChanged(auth, (user) => {
+    if (!user) {
+      window.location.href = "login.html"; // or "signup.html" if you prefer
+    }
+  });
+</script>
 </body>
 </html>
