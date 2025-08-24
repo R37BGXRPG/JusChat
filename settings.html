@@ -21,6 +21,16 @@
       align-items: center;
       padding: 2rem 1rem;
       transition: background 0.3s, color 0.3s;
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+    }
+    .main-content-wrapper {
+        min-height: 100vh;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
     header {
       width: 100%;
@@ -95,33 +105,35 @@
   </style>
 </head>
 <body>
-  <header>
-    <h1>JusChat - Settings</h1>
-    <a href="index.html" class="back-button">Back</a>
-  </header>
-  <div class="settings-container">
-    <div class="settings-item">
-      <label for="theme-select">Themes</label>
-      <select id="theme-select">
-        <option value="purple">Purple (Default)</option>
-        <option value="dark">Dark</option>
-        <option value="white">White</option>
-      </select>
-    </div>
-    <div class="settings-item">
-      <label for="special-theme-select">Special Themes</label>
-      <select id="special-theme-select">
-        <option value="none">None</option>
-        <option value="frosted-glass">Frosted Glass</option>
-      </select>
-    </div>
-    <div class="settings-item">
-      <label for="font-select">Fonts</label>
-      <select id="font-select">
-        <option value="Segoe UI">Segoe UI</option>
-        <option value="Poppins">Poppins</option>
-        <option value="Montserrat">Montserrat</option>
-      </select>
+  <div class="main-content-wrapper">
+    <header>
+      <h1>JusChat - Settings</h1>
+      <a href="index.html" class="back-button">Back</a>
+    </header>
+    <div class="settings-container">
+      <div class="settings-item">
+        <label for="theme-select">Themes</label>
+        <select id="theme-select">
+          <option value="purple">Purple (Default)</option>
+          <option value="dark">Dark</option>
+          <option value="white">White</option>
+        </select>
+      </div>
+      <div class="settings-item">
+        <label for="special-theme-select">Special Themes</label>
+        <select id="special-theme-select">
+          <option value="none">None</option>
+          <option value="frosted-glass">Frosted Glass</option>
+        </select>
+      </div>
+      <div class="settings-item">
+        <label for="font-select">Fonts</label>
+        <select id="font-select">
+          <option value="Segoe UI">Segoe UI</option>
+          <option value="Poppins">Poppins</option>
+          <option value="Montserrat">Montserrat</option>
+        </select>
+      </div>
     </div>
   </div>
   <script src="script.js"></script>

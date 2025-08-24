@@ -1,6 +1,9 @@
 // script.js
 
 document.addEventListener('DOMContentLoaded', () => {
+  // Define the URL for the background image
+  const FROSTED_GLASS_IMAGE_URL = 'http://googleusercontent.com/file_content/11';
+
   // Function to apply the saved theme and font from localStorage
   function applySavedSettings() {
     const savedTheme = localStorage.getItem('theme');
@@ -15,7 +18,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const savedSpecialTheme = localStorage.getItem('specialTheme');
     if (savedSpecialTheme) {
-      document.body.classList.add(savedSpecialTheme);
+      if (savedSpecialTheme === 'frosted-glass-effect') {
+        document.body.style.backgroundImage = `url('${FROSTED_GLASS_IMAGE_URL}')`;
+        const mainContentWrapper = document.querySelector('.main-content-wrapper');
+        if (mainContentWrapper) {
+          mainContentWrapper.classList.add('frosted-glass-effect');
+        }
+      }
       // Update the dropdown on the settings page if it exists
       const specialThemeSelect = document.getElementById('special-theme-select');
       if (specialThemeSelect) {
@@ -52,12 +61,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (specialThemeSelect) {
     specialThemeSelect.addEventListener('change', (event) => {
-      // Remove any existing special theme class
-      document.body.classList.remove('frosted-glass-effect');
+      const mainContentWrapper = document.querySelector('.main-content-wrapper');
+      // Clear all special themes first
+      document.body.style.backgroundImage = 'none';
+      if (mainContentWrapper) {
+        mainContentWrapper.classList.remove('frosted-glass-effect');
+      }
 
       const selectedSpecialTheme = event.target.value;
-      if (selectedSpecialTheme !== 'none') {
-        document.body.classList.add(selectedSpecialTheme);
+      if (selectedSpecialTheme === 'frosted-glass') {
+        document.body.style.backgroundImage = `url('${FROSTED_GLASS_IMAGE_URL}')`;
+        if (mainContentWrapper) {
+          mainContentWrapper.classList.add('frosted-glass-effect');
+        }
       }
       localStorage.setItem('specialTheme', selectedSpecialTheme);
     });

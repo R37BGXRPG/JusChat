@@ -21,6 +21,16 @@
       align-items: center;
       padding: 2rem 1rem;
       transition: background 0.3s, color 0.3s;
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+    }
+    .main-content-wrapper {
+        min-height: 100vh;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
     header {
       width: 100%;
@@ -114,27 +124,29 @@
   </style>
 </head>
 <body>
-  <header>
-    <h1>JusChat - Users</h1>
-    <a href="settings.html" class="settings-button">Settings</a>
-  </header>
-  <div id="user-list">
-    <!-- Dummy user items for UI demonstration -->
-    <div class="user-item">
-      <img src="https://ui-avatars.com/api/?name=User+One" alt="User One" class="user-avatar">
-      <div class="user-name">User One</div>
-    </div>
-    <div class="user-item">
-      <img src="https://ui-avatars.com/api/?name=User+Two" alt="User Two" class="user-avatar">
-      <div class="user-name">User Two</div>
-    </div>
-    <div class="user-item">
-      <img src="https://ui-avatars.com/api/?name=User+Three" alt="User Three" class="user-avatar">
-      <div class="user-name">User Three</div>
-    </div>
-    <div class="user-item">
-      <img src="https://ui-avatars.com/api/?name=User+Four" alt="User Four" class="user-avatar">
-      <div class="user-name">User Four</div>
+  <div class="main-content-wrapper">
+    <header>
+      <h1>JusChat - Users</h1>
+      <a href="settings.html" class="settings-button">Settings</a>
+    </header>
+    <div id="user-list">
+      <!-- Dummy user items for UI demonstration -->
+      <div class="user-item">
+        <img src="https://ui-avatars.com/api/?name=User+One" alt="User One" class="user-avatar">
+        <div class="user-name">User One</div>
+      </div>
+      <div class="user-item">
+        <img src="https://ui-avatars.com/api/?name=User+Two" alt="User Two" class="user-avatar">
+        <div class="user-name">User Two</div>
+      </div>
+      <div class="user-item">
+        <img src="https://ui-avatars.com/api/?name=User+Three" alt="User Three" class="user-avatar">
+        <div class="user-name">User Three</div>
+      </div>
+      <div class="user-item">
+        <img src="https://ui-avatars.com/api/?name=User+Four" alt="User Four" class="user-avatar">
+        <div class="user-name">User Four</div>
+      </div>
     </div>
   </div>
   <script src="script.js"></script>
