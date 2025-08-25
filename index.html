@@ -4,12 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>JusChat - Users</title>
-  <!-- Load fonts first -->
   <link rel="stylesheet" href="fonts.css">
   <link rel="stylesheet" href="themes.css">
   <link rel="stylesheet" href="specialTheme.css">
   <style>
-    /* Base styles for all pages, moved from inline to a central location for consistency */
     body {
       background: var(--bg);
       color: var(--text);
@@ -20,17 +18,17 @@
       flex-direction: column;
       align-items: center;
       padding: 2rem 1rem;
-      transition: background 0.3s, color 0.3s;
       background-size: cover;
       background-position: center;
       background-attachment: fixed;
+      transition: background 0.3s, color 0.3s;
     }
     .main-content-wrapper {
-        min-height: 100vh;
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+      min-height: 100vh;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
     header {
       width: 100%;
@@ -59,7 +57,6 @@
       box-shadow: 0 4px 12px rgba(0, 123, 255, 0.2);
       transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
       text-decoration: none;
-      display: inline-block;
     }
     .settings-button:hover {
       transform: translateY(-2px);
@@ -130,48 +127,56 @@
       <a href="settings.html" class="settings-button">Settings</a>
     </header>
     <div id="user-list">
-      <!-- Dummy user items for UI demonstration -->
-      <div class="user-item">
-        <img src="https://ui-avatars.com/api/?name=User+One" alt="User One" class="user-avatar">
-        <div class="user-name">User One</div>
-      </div>
-      <div class="user-item">
-        <img src="https://ui-avatars.com/api/?name=User+Two" alt="User Two" class="user-avatar">
-        <div class="user-name">User Two</div>
-      </div>
-      <div class="user-item">
-        <img src="https://ui-avatars.com/api/?name=User+Three" alt="User Three" class="user-avatar">
-        <div class="user-name">User Three</div>
-      </div>
-      <div class="user-item">
-        <img src="https://ui-avatars.com/api/?name=User+Four" alt="User Four" class="user-avatar">
-        <div class="user-name">User Four</div>
-      </div>
+      <!-- Dynamic user cards will be injected here -->
     </div>
   </div>
-  <script src="script.js"></script>
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
-  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyA7OMNG2gHH2ZHhfQoWTbB6w5ZYaFCjBk8",
-    authDomain: "juschat-2a8a6.firebaseapp.com",
-    projectId: "juschat-2a8a6",
-    storageBucket: "juschat-2a8a6.firebasestorage.app",
-  messagingSenderId: "16171982663",
-  appId: "1:16171982663:web:13cbcac9ffe732454a3662",
-  measurementId: "G-25RE5GTR3D"
-  };
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
+    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
+    const firebaseConfig = {
+      apiKey: "AIzaSyA7OMNG2gHH2ZHhfQoWTbB6w5ZYaFCjBk8",
+      authDomain: "juschat-2a8a6.firebaseapp.com",
+      projectId: "juschat-2a8a6",
+      storageBucket: "juschat-2a8a6.firebasestorage.app",
+      messagingSenderId: "16171982663",
+      appId: "1:16171982663:web:13cbcac9ffe732454a3662",
+      measurementId: "G-25RE5GTR3D"
+    };
 
-  onAuthStateChanged(auth, (user) => {
-    if (!user) {
-      window.location.href = "login.html"; // or "signup.html" if you prefer
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    async function loadUsers() {
+      const userList = document.getElementById("user-list");
+      userList.innerHTML = "";
+
+      const snapshot = await getDocs(collection(db, "users"));
+      snapshot.forEach(doc => {
+        const data = doc.data();
+        const username = data.username || "Unnamed";
+        const avatarURL = data.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(username)}&background=random`;
+
+        const card = document.createElement("div");
+        card.className = "user-item";
+        card.innerHTML = `
+          <img src="${avatarURL}" alt="${username}" class="user-avatar">
+          <div class="user-name">${username}</div>
+        `;
+        userList.appendChild(card);
+      });
     }
-  });
-</script>
+
+    onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        window.location.href = "login.html";
+      } else {
+        loadUsers();
+      }
+    });
+  </script>
 </body>
 </html>
