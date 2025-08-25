@@ -74,12 +74,13 @@
       background: var(--box-bg);
       border-radius: 1.5rem;
       padding: 1.5rem;
-      cursor: pointer;
+      cursor: default;
       transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
       display: flex;
+      flex-direction: column;
       align-items: center;
-      gap: 1.5rem;
       box-shadow: 0 4px 20px var(--shadow);
+      text-align: center;
     }
     .user-item:hover {
       transform: translateY(-5px);
@@ -94,29 +95,36 @@
       box-shadow: 0 2px 8px var(--shadow);
       transition: transform 0.2s;
     }
-    .user-item:hover .user-avatar {
-      transform: scale(1.05);
-    }
     .user-name {
       font-size: 1.3rem;
       font-weight: 600;
       letter-spacing: 0.5px;
       color: var(--text);
+      margin-top: 1rem;
     }
-    @media (max-width: 600px) {
-      h1 {
-        font-size: 2rem;
-      }
-      .settings-button {
-        padding: 0.6rem 1.2rem;
-      }
-      .user-avatar {
-        width: 50px;
-        height: 50px;
-      }
-      .user-name {
-        font-size: 1.1rem;
-      }
+    .user-item button {
+      margin-top: 1rem;
+      padding: 0.6rem 1.2rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      border-radius: 0.5rem;
+      border: none;
+      cursor: pointer;
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(0, 123, 255, 0.2);
+      transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+    }
+    .user-item button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0, 123, 255, 0.3);
+      background: #0069d9;
+    }
+    .user-item button[disabled] {
+      background: #ccc;
+      color: #666;
+      cursor: default;
+      box-shadow: none;
     }
   </style>
 </head>
@@ -126,21 +134,25 @@
       <h1>JusChat - Users</h1>
       <a href="settings.html" class="settings-button">Settings</a>
     </header>
-    <div id="user-list">
-      <!-- Dynamic user cards will be injected here -->
-    </div>
+    <div id="user-list"></div>
   </div>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
     import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
-    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
+    import {
+      getFirestore,
+      collection,
+      getDocs,
+      getDoc,
+      doc
+    } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyA7OMNG2gHH2ZHhfQoWTbB6w5ZYaFCjBk8",
       authDomain: "juschat-2a8a6.firebaseapp.com",
       projectId: "juschat-2a8a6",
-      storageBucket: "juschat-2a8a6.firebasestorage.app",
+      storageBucket: "juschat-2a8a6.appspot.com",
       messagingSenderId: "16171982663",
       appId: "1:16171982663:web:13cbcac9ffe732454a3662",
       measurementId: "G-25RE5GTR3D"
@@ -154,17 +166,39 @@
       const userList = document.getElementById("user-list");
       userList.innerHTML = "";
 
+      const currentUser = auth.currentUser;
+      const currentSnap = await getDoc(doc(db, "users", currentUser.uid));
+      const currentData = currentSnap.data();
+      const currentUsername = currentData.username;
+      const sent = currentData.sent || [];
+      const arrived = currentData.arrived || [];
+      const friends = currentData.friends || [];
+
       const snapshot = await getDocs(collection(db, "users"));
       snapshot.forEach(doc => {
         const data = doc.data();
-        const username = data.username || "Unnamed";
+        const username = data.username;
+        if (username === currentUsername) return;
+
         const avatarURL = data.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(username)}&background=random`;
+
+        let actionButton = "";
+        if (friends.includes(username)) {
+          actionButton = `<button disabled>Friends</button>`;
+        } else if (arrived.includes(username)) {
+          actionButton = `<button onclick="acceptFriendRequest('${username}')">Accept Request</button>`;
+        } else if (sent.includes(username)) {
+          actionButton = `<button disabled>Request Sent</button>`;
+        } else {
+          actionButton = `<button onclick="sendFriendRequest('${username}')">Send Request</button>`;
+        }
 
         const card = document.createElement("div");
         card.className = "user-item";
         card.innerHTML = `
           <img src="${avatarURL}" alt="${username}" class="user-avatar">
           <div class="user-name">${username}</div>
+          ${actionButton}
         `;
         userList.appendChild(card);
       });
@@ -178,5 +212,6 @@
       }
     });
   </script>
+  <script src="script.js"></script>
 </body>
 </html>
