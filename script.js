@@ -15,7 +15,10 @@ import {
   collection,
   query,
   where,
-  getDoc
+  getDoc,
+  updateDoc,
+  arrayUnion,
+  arrayRemove
 } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
 
 // Firebase config
@@ -57,7 +60,10 @@ window.signupUser = async function(username, email, password) {
     const userCred = await createUserWithEmailAndPassword(auth, email, password);
     await setDoc(doc(db, "users", userCred.user.uid), {
       username: username,
-      createdAt: Date.now()
+      createdAt: Date.now(),
+      sent: [],
+      arrived: [],
+      friends: []
     });
 
     console.log("Signed up:", userCred.user.uid);
@@ -80,7 +86,10 @@ window.loginWithGoogle = async function() {
     if (!userSnap.exists()) {
       await setDoc(userRef, {
         username: user.displayName || "user_" + Date.now(),
-        createdAt: Date.now()
+        createdAt: Date.now(),
+        sent: [],
+        arrived: [],
+        friends: []
       });
     }
 
@@ -89,4 +98,54 @@ window.loginWithGoogle = async function() {
   } catch (err) {
     alert("Google login failed: " + err.message);
   }
+};
+
+// 🤝 Send Friend Request
+window.sendFriendRequest = async function(targetUsername) {
+  const user = auth.currentUser;
+  const senderSnap = await getDoc(doc(db, "users", user.uid));
+  const senderUsername = senderSnap.data().username;
+
+  const q = query(collection(db, "users"), where("username", "==", targetUsername));
+  const snapshot = await getDocs(q);
+  if (snapshot.empty) return alert("User not found");
+
+  const targetDoc = snapshot.docs[0];
+  const targetUid = targetDoc.id;
+
+  await updateDoc(doc(db, "users", user.uid), {
+    sent: arrayUnion(targetUsername)
+  });
+
+  await updateDoc(doc(db, "users", targetUid), {
+    arrived: arrayUnion(senderUsername)
+  });
+
+  alert("Friend request sent to " + targetUsername);
+};
+
+// ✅ Accept Friend Request
+window.acceptFriendRequest = async function(senderUsername) {
+  const user = auth.currentUser;
+  const receiverSnap = await getDoc(doc(db, "users", user.uid));
+  const receiverUsername = receiverSnap.data().username;
+
+  const q = query(collection(db, "users"), where("username", "==", senderUsername));
+  const snapshot = await getDocs(q);
+  if (snapshot.empty) return alert("Sender not found");
+
+  const senderDoc = snapshot.docs[0];
+  const senderUid = senderDoc.id;
+
+  await updateDoc(doc(db, "users", user.uid), {
+    friends: arrayUnion(senderUsername),
+    arrived: arrayRemove(senderUsername)
+  });
+
+  await updateDoc(doc(db, "users", senderUid), {
+    friends: arrayUnion(receiverUsername),
+    sent: arrayRemove(receiverUsername)
+  });
+
+  alert("You are now friends with " + senderUsername);
 };
