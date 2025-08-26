@@ -1,180 +1,250 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>JusChat - Settings</title>
-  <link rel="stylesheet" href="fonts.css">
-  <link rel="stylesheet" href="themes.css">
-  <link rel="stylesheet" href="specialTheme.css">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    body {
-      background-color: var(--bg);
-      color: var(--text);
-      font-family: var(--font);
-      transition: background-color 0.3s, color 0.3s;
-    }
-    .settings-container, .user-item {
-      background-color: var(--box-bg);
-      color: var(--text);
-      border: 1px solid var(--border-color);
-      box-shadow: 0 4px 12px var(--shadow);
-      transition: background-color 0.3s, color 0.3s, border-color 0.3s, box-shadow 0.3s;
-    }
-    .frosted-glass-effect .settings-container,
-    .frosted-glass-effect .user-item {
-      background: rgba(var(--box-bg-rgb), 0.5);
-      border: 1px solid rgba(var(--border-color-rgb), 0.3);
-      box-shadow: 0 4px 20px rgba(var(--shadow-rgb), 0.1);
-    }
-  </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JusChat - Settings</title>
+    <link rel="stylesheet" href="fonts.css">
+    <link rel="stylesheet" href="themes.css">
+    <link rel="stylesheet" href="specialTheme.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Original styles from your file */
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: var(--font);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .settings-container, .user-item {
+            background-color: var(--box-bg);
+            color: var(--text);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 12px var(--shadow);
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .frosted-glass-effect .settings-container,
+        .frosted-glass-effect .user-item {
+            background: rgba(var(--box-bg-rgb), 0.5);
+            border: 1px solid rgba(var(--border-color-rgb), 0.3);
+            box-shadow: 0 4px 20px rgba(var(--shadow-rgb), 0.1);
+        }
+
+        /* Make body transparent when special theme is active to show the background div */
+        [data-special-theme='frosted-glass-effect'] body {
+            background: transparent;
+        }
+    </style>
 </head>
 <body class="p-8 md:p-12 lg:p-16 flex items-center justify-center min-h-screen">
-  <div class="settings-container max-w-2xl w-full p-6 sm:p-8 rounded-2xl shadow-lg border">
-    <h1 class="text-3xl sm:text-4xl font-bold mb-6 text-center">Settings</h1>
+    <!-- New container for the special theme background and wallpaper -->
+    <div class="special-theme-container"></div>
+    <div class="settings-container max-w-2xl w-full p-6 sm:p-8 rounded-2xl shadow-lg border">
+        <h1 class="text-3xl sm:text-4xl font-bold mb-6 text-center">Settings</h1>
 
-    <!-- User Profile -->
-    <div class="user-item p-4 sm:p-6 rounded-xl flex items-center mb-6">
-      <img src="https://placehold.co/80x80/6f42c1/ffffff?text=U" alt="User Profile" class="w-16 h-16 rounded-full border-2 border-accent">
-      <div class="ml-4 flex-grow">
-        <p class="font-semibold text-lg" id="username">User Name</p>
-        <p class="text-sm text-gray-500" id="email">user@example.com</p>
-      </div>
-      <button class="px-4 py-2 bg-accent text-white rounded-full hover:opacity-80 transition-opacity duration-300">Edit Profile</button>
+        <!-- User Profile -->
+        <div class="user-item p-4 sm:p-6 rounded-xl flex items-center mb-6">
+            <img src="https://placehold.co/80x80/6f42c1/ffffff?text=U" alt="User Profile" class="w-16 h-16 rounded-full border-2 border-accent">
+            <div class="ml-4 flex-grow">
+                <p class="font-semibold text-lg" id="username">User Name</p>
+                <p class="text-sm text-gray-500" id="email">user@example.com</p>
+            </div>
+            <button class="px-4 py-2 bg-accent text-white rounded-full hover:opacity-80 transition-opacity duration-300">Edit Profile</button>
+        </div>
+
+        <!-- Theme Settings -->
+        <div class="space-y-6">
+            <div>
+                <label for="theme-select" class="block font-medium mb-2">Theme</label>
+                <select id="theme-select" class="w-full p-3 rounded-xl border border-border-color bg-box-bg text-text">
+                    <option value="purple">Purple (Default)</option>
+                    <option value="dark">Dark</option>
+                    <option value="white">White</option>
+                </select>
+            </div>
+            <div>
+                <label for="special-theme-select" class="block font-medium mb-2">Special Theme</label>
+                <select id="special-theme-select" class="w-full p-3 rounded-xl border border-border-color bg-box-bg text-text">
+                    <option value="none">None</option>
+                    <option value="frosted-glass-effect">Frosted Glass</option>
+                </select>
+            </div>
+            <!-- New Wallpapers Dropdown -->
+            <div>
+                <label for="wallpaper-select" class="block font-medium mb-2">Wallpaper</label>
+                <select id="wallpaper-select" class="w-full p-3 rounded-xl border border-border-color bg-box-bg text-text">
+                    <option value="Wallpaper_1">Wallpaper 1</option>
+                    <option value="Wallpaper_2">Wallpaper 2</option>
+                    <option value="Wallpaper_3">Wallpaper 3</option>
+                </select>
+            </div>
+            <div>
+                <label for="font-select" class="block font-medium mb-2">Font</label>
+                <select id="font-select" class="w-full p-3 rounded-xl border border-border-color bg-box-bg text-text">
+                    <option value="Segoe UI">Segoe UI</option>
+                    <option value="Poppins">Poppins</option>
+                    <option value="Montserrat">Montserrat</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Navigation Buttons -->
+        <div class="flex justify-between mt-8">
+            <button id="back-button" class="px-6 py-3 bg-gray-500 text-white rounded-full hover:bg-gray-600 transition-colors duration-300">
+                Back
+            </button>
+            <button id="logout-button" class="px-6 py-3 bg-red-500 text-white rounded-full hover:bg-red-600 transition-colors duration-300">
+                Logout
+            </button>
+        </div>
     </div>
 
-    <!-- Theme Settings -->
-    <div class="space-y-6">
-      <div>
-        <label for="theme-select" class="block font-medium mb-2">Theme</label>
-        <select id="theme-select" class="w-full p-3 rounded-xl border border-border-color bg-box-bg text-text">
-          <option value="purple">Purple (Default)</option>
-          <option value="dark">Dark</option>
-          <option value="white">White</option>
-        </select>
-      </div>
-      <div>
-        <label for="special-theme-select" class="block font-medium mb-2">Special Theme</label>
-        <select id="special-theme-select" class="w-full p-3 rounded-xl border border-border-color bg-box-bg text-text">
-          <option value="none">None</option>
-          <option value="frosted-glass-effect">Frosted Glass</option>
-        </select>
-      </div>
-      <div>
-        <label for="font-select" class="block font-medium mb-2">Font</label>
-        <select id="font-select" class="w-full p-3 rounded-xl border border-border-color bg-box-bg text-text">
-          <option value="Segoe UI">Segoe UI</option>
-          <option value="Poppins">Poppins</option>
-          <option value="Montserrat">Montserrat</option>
-        </select>
-      </div>
-    </div>
+    <!-- Firebase + Theme Logic -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
+        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
 
-    <!-- Navigation Buttons -->
-    <div class="flex justify-between mt-8">
-      <button id="back-button" class="px-6 py-3 bg-gray-500 text-white rounded-full hover:bg-gray-600 transition-colors duration-300">
-        Back
-      </button>
-      <button id="logout-button" class="px-6 py-3 bg-red-500 text-white rounded-full hover:bg-red-600 transition-colors duration-300">
-        Logout
-      </button>
-    </div>
-  </div>
+        const firebaseConfig = {
+            apiKey: "AIzaSyA7OMNG2gHH2ZHhfQoWTbB6w5ZYaFCjBk8",
+            authDomain: "juschat-2a8a6.firebaseapp.com",
+            projectId: "juschat-2a8a6",
+            storageBucket: "juschat-2a8a6.appspot.com",
+            messagingSenderId: "16171982663",
+            appId: "1:16171982663:web:13cbcac9ffe732454a3662",
+            measurementId: "G-25RE5GTR3D"
+        };
 
-  <!-- Firebase + Theme Logic -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
-    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
-    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyA7OMNG2gHH2ZHhfQoWTbB6w5ZYaFCjBk8",
-      authDomain: "juschat-2a8a6.firebaseapp.com",
-      projectId: "juschat-2a8a6",
-      storageBucket: "juschat-2a8a6.appspot.com",
-      messagingSenderId: "16171982663",
-      appId: "1:16171982663:web:13cbcac9ffe732454a3662",
-      measurementId: "G-25RE5GTR3D"
-    };
+        // Function to apply themes from localStorage on page load
+        function applySavedTheme() {
+            const bodyElement = document.body;
+            const savedTheme = localStorage.getItem('theme');
+            const savedSpecialTheme = localStorage.getItem('specialTheme');
+            const savedFont = localStorage.getItem('font');
+            const savedWallpaper = localStorage.getItem('wallpaper');
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
+            if (savedTheme) {
+                bodyElement.setAttribute('data-theme', savedTheme);
+            }
+            if (savedSpecialTheme) {
+                bodyElement.setAttribute('data-special-theme', savedSpecialTheme);
+            } else {
+                bodyElement.removeAttribute('data-special-theme');
+            }
+            if (savedFont) {
+                bodyElement.setAttribute('data-font', savedFont);
+            }
+            if (savedSpecialTheme === 'frosted-glass-effect' && savedWallpaper) {
+                bodyElement.setAttribute('data-wallpaper', savedWallpaper);
+            } else {
+                bodyElement.removeAttribute('data-wallpaper');
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            applySavedTheme();
 
-    onAuthStateChanged(auth, async (user) => {
-      if (!user) {
-        window.location.href = "login.html";
-        return;
-      }
+            onAuthStateChanged(auth, async (user) => {
+                if (!user) {
+                    window.location.href = "login.html";
+                    return;
+                }
 
-      const userRef = doc(db, "users", user.uid);
-      const userSnap = await getDoc(userRef);
-      const data = userSnap.data();
+                const userRef = doc(db, "users", user.uid);
+                const userSnap = await getDoc(userRef);
+                const data = userSnap.data();
 
-      const username = data?.username || "Unknown";
-      const email = user.email || "No email";
-      const avatarURL = user.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(username)}&background=random`;
+                const username = data?.username || "Unknown";
+                const email = user.email || "No email";
+                const avatarURL = user.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(username)}&background=random`;
 
-      document.querySelector(".user-item img").src = avatarURL;
-      document.getElementById("username").textContent = username;
-      document.getElementById("email").textContent = email;
-    });
+                document.querySelector(".user-item img").src = avatarURL;
+                document.getElementById("username").textContent = username;
+                document.getElementById("email").textContent = email;
+            });
+        });
 
-    document.getElementById("back-button").addEventListener("click", () => {
-      window.location.href = "index.html";
-    });
+        document.getElementById("back-button").addEventListener("click", () => {
+            window.location.href = "index.html";
+        });
 
-    document.getElementById("logout-button").addEventListener("click", async () => {
-      await signOut(auth);
-      window.location.href = "login.html";
-    });
+        document.getElementById("logout-button").addEventListener("click", async () => {
+            await signOut(auth);
+            window.location.href = "login.html";
+        });
 
-    // Theme logic
-    const htmlElement = document.documentElement;
-    const themeSelect = document.getElementById("theme-select");
-    const specialThemeSelect = document.getElementById("special-theme-select");
-    const fontSelect = document.getElementById("font-select");
+        const htmlElement = document.documentElement;
+        const themeSelect = document.getElementById("theme-select");
+        const specialThemeSelect = document.getElementById("special-theme-select");
+        const wallpaperSelect = document.getElementById("wallpaper-select"); // New
+        const fontSelect = document.getElementById("font-select");
 
-    const savedTheme = localStorage.getItem("theme");
-    const savedSpecialTheme = localStorage.getItem("specialTheme");
-    const savedFont = localStorage.getItem("font");
+        const savedTheme = localStorage.getItem("theme");
+        const savedSpecialTheme = localStorage.getItem("specialTheme");
+        const savedWallpaper = localStorage.getItem("wallpaper"); // New
+        const savedFont = localStorage.getItem("font");
 
-    if (savedTheme) {
-      htmlElement.setAttribute("data-theme", savedTheme);
-      themeSelect.value = savedTheme;
-    }
-    if (savedSpecialTheme) {
-      htmlElement.classList.add(savedSpecialTheme);
-      specialThemeSelect.value = savedSpecialTheme;
-    }
-    if (savedFont) {
-      htmlElement.setAttribute("data-font", savedFont);
-      fontSelect.value = savedFont;
-    }
+        if (savedTheme) {
+            htmlElement.setAttribute("data-theme", savedTheme);
+            themeSelect.value = savedTheme;
+        }
+        if (savedSpecialTheme) {
+            htmlElement.setAttribute('data-special-theme', savedSpecialTheme);
+            specialThemeSelect.value = savedSpecialTheme;
+        } else {
+            htmlElement.removeAttribute('data-special-theme');
+        }
+        if (savedWallpaper) { // New
+            htmlElement.setAttribute("data-wallpaper", savedWallpaper);
+            wallpaperSelect.value = savedWallpaper;
+        }
+        if (savedFont) {
+            htmlElement.setAttribute("data-font", savedFont);
+            fontSelect.value = savedFont;
+        }
 
-    themeSelect.addEventListener("change", (e) => {
-      const selected = e.target.value;
-      htmlElement.setAttribute("data-theme", selected);
-      localStorage.setItem("theme", selected);
-    });
+        themeSelect.addEventListener("change", (e) => {
+            const selected = e.target.value;
+            htmlElement.setAttribute("data-theme", selected);
+            localStorage.setItem("theme", selected);
+            // Apply the change immediately
+            applySavedTheme();
+        });
 
-    specialThemeSelect.addEventListener("change", (e) => {
-      htmlElement.classList.remove("frosted-glass-effect");
-      const selected = e.target.value;
-      if (selected !== "none") {
-        htmlElement.classList.add(selected);
-        localStorage.setItem("specialTheme", selected);
-      } else {
-        localStorage.removeItem("specialTheme");
-      }
-    });
+        specialThemeSelect.addEventListener("change", (e) => {
+            const selected = e.target.value;
+            if (selected !== "none") {
+                htmlElement.setAttribute('data-special-theme', selected);
+                localStorage.setItem("specialTheme", selected);
+            } else {
+                htmlElement.removeAttribute('data-special-theme');
+                localStorage.removeItem("specialTheme");
+            }
+            // Apply the change immediately
+            applySavedTheme();
+        });
 
-    fontSelect.addEventListener("change", (e) => {
-      const selected = e.target.value;
-      htmlElement.setAttribute("data-font", selected);
-      localStorage.setItem("font", selected);
-    });
-  </script>
+        wallpaperSelect.addEventListener("change", (e) => { // New
+            const selected = e.target.value;
+            htmlElement.setAttribute("data-wallpaper", selected);
+            localStorage.setItem("wallpaper", selected);
+            // Apply the change immediately
+            applySavedTheme();
+        });
+
+        fontSelect.addEventListener("change", (e) => {
+            const selected = e.target.value;
+            htmlElement.setAttribute("data-font", selected);
+            localStorage.setItem("font", selected);
+            // Apply the change immediately
+            applySavedTheme();
+        });
+    </script>
 </body>
 </html>
