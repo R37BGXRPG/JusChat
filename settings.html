@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,7 +17,7 @@
             transition: background-color 0.3s, color 0.3s;
         }
 
-        .settings-container, .user-item {
+        .settings-container, .user-item, .settings-select {
             background-color: var(--box-bg);
             color: var(--text);
             border: 1px solid var(--border-color);
@@ -29,6 +28,12 @@
         .frosted-glass-effect .settings-container,
         .frosted-glass-effect .user-item {
             background: rgba(var(--box-bg-rgb), 0.5);
+            border: 1px solid rgba(var(--border-color-rgb), 0.3);
+            box-shadow: 0 4px 20px rgba(var(--shadow-rgb), 0.1);
+        }
+
+        .frosted-glass-effect .settings-select {
+            background: rgba(var(--box-bg-rgb), 0.7);
             border: 1px solid rgba(var(--border-color-rgb), 0.3);
             box-shadow: 0 4px 20px rgba(var(--shadow-rgb), 0.1);
         }
@@ -59,7 +64,7 @@
         <div class="space-y-6">
             <div>
                 <label for="theme-select" class="block font-medium mb-2">Theme</label>
-                <select id="theme-select" class="w-full p-3 rounded-xl border border-border-color bg-box-bg text-text">
+                <select id="theme-select" class="w-full p-3 rounded-xl border border-border-color bg-box-bg text-text settings-select">
                     <option value="purple">Purple (Default)</option>
                     <option value="dark">Dark</option>
                     <option value="white">White</option>
@@ -67,7 +72,7 @@
             </div>
             <div>
                 <label for="special-theme-select" class="block font-medium mb-2">Special Theme</label>
-                <select id="special-theme-select" class="w-full p-3 rounded-xl border border-border-color bg-box-bg text-text">
+                <select id="special-theme-select" class="w-full p-3 rounded-xl border border-border-color bg-box-bg text-text settings-select">
                     <option value="none">None</option>
                     <option value="frosted-glass-effect">Frosted Glass</option>
                 </select>
@@ -75,7 +80,7 @@
             <!-- New Wallpapers Dropdown -->
             <div>
                 <label for="wallpaper-select" class="block font-medium mb-2">Wallpaper</label>
-                <select id="wallpaper-select" class="w-full p-3 rounded-xl border border-border-color bg-box-bg text-text">
+                <select id="wallpaper-select" class="w-full p-3 rounded-xl border border-border-color bg-box-bg text-text settings-select">
                     <option value="Wallpaper_1">Wallpaper 1</option>
                     <option value="Wallpaper_2">Wallpaper 2</option>
                     <option value="Wallpaper_3">Wallpaper 3</option>
@@ -83,7 +88,7 @@
             </div>
             <div>
                 <label for="font-select" class="block font-medium mb-2">Font</label>
-                <select id="font-select" class="w-full p-3 rounded-xl border border-border-color bg-box-bg text-text">
+                <select id="font-select" class="w-full p-3 rounded-xl border border-border-color bg-box-bg text-text settings-select">
                     <option value="Segoe UI">Segoe UI</option>
                     <option value="Poppins">Poppins</option>
                     <option value="Montserrat">Montserrat</option>
