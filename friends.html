@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JusChat – Friends</title>
+  <link rel="stylesheet" href="fonts.css">
+  <link rel="stylesheet" href="themes.css">
+  <link rel="stylesheet" href="specialTheme.css">
+  <style>
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      margin: 0;
+      padding: 2rem 1rem;
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+    }
+    .main-wrapper {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+    #search {
+      width: 100%;
+      padding: 1rem;
+      font-size: 1rem;
+      border-radius: 0.75rem;
+      border: 1px solid var(--border-color);
+      margin-bottom: 2rem;
+      background: var(--box-bg);
+      color: var(--text);
+    }
+    .user-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    .user-card {
+      background: var(--box-bg);
+      border-radius: 1.5rem;
+      padding: 1.5rem;
+      box-shadow: 0 4px 20px var(--shadow);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .user-avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--accent);
+      margin-bottom: 1rem;
+    }
+    .user-name {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+    .user-card button {
+      margin-top: 0.5rem;
+      padding: 0.6rem 1.2rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      border-radius: 0.5rem;
+      border: none;
+      cursor: pointer;
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(0, 123, 255, 0.2);
+      transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+    }
+    .user-card button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0, 123, 255, 0.3);
+      background: #0069d9;
+    }
+    .user-card button[disabled] {
+      background: #ccc;
+      color: #666;
+      cursor: default;
+      box-shadow: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="main-wrapper">
+    <h1>Manage Friends</h1>
+    <input type="text" id="search" placeholder="Search users by username..." />
+    <div id="user-list" class="user-list"></div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
+    import {
+      getFirestore,
+      collection,
+      getDocs,
+      getDoc,
+      doc
+    } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyA7OMNG2gHH2ZHhfQoWTbB6w5ZYaFCjBk8",
+      authDomain: "juschat-2a8a6.firebaseapp.com",
+      projectId: "juschat-2a8a6",
+      storageBucket: "juschat-2a8a6.appspot.com",
+      messagingSenderId: "16171982663",
+      appId: "1:16171982663:web:13cbcac9ffe732454a3662",
+      measurementId: "G-25RE5GTR3D"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    let allUsers = [];
+    let currentUsername = "";
+    let sent = [], arrived = [], friends = [];
+
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        window.location.href = "login.html";
+        return;
+      }
+
+      const currentSnap = await getDoc(doc(db, "users", user.uid));
+      const currentData = currentSnap.data();
+      currentUsername = currentData.username;
+      sent = currentData.sent || [];
+      arrived = currentData.arrived || [];
+      friends = currentData.friends || [];
+
+      const snapshot = await getDocs(collection(db, "users"));
+      allUsers = snapshot.docs.map(doc => doc.data()).filter(u => u.username !== currentUsername);
+
+      renderUserCards(allUsers);
+    });
+
+    function renderUserCards(users) {
+      const container = document.getElementById("user-list");
+      container.innerHTML = "";
+
+      users.forEach(user => {
+        const username = user.username;
+        const avatarURL = user.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(username)}&background=random`;
+
+        let button = "";
+        if (friends.includes(username)) {
+          button = `<button disabled>Friends</button>`;
+        } else if (arrived.includes(username)) {
+          button = `<button onclick="acceptFriendRequest('${username}')">Accept Request</button>`;
+        } else if (sent.includes(username)) {
+          button = `<button disabled>Request Sent</button>`;
+        } else {
+          button = `<button onclick="sendFriendRequest('${username}')">Send Request</button>`;
+        }
+
+        const card = document.createElement("div");
+        card.className = "user-card";
+        card.innerHTML = `
+          <img src="${avatarURL}" alt="${username}" class="user-avatar">
+          <div class="user-name">${username}</div>
+          ${button}
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    document.getElementById("search").addEventListener("input", (e) => {
+      const query = e.target.value.toLowerCase();
+      const filtered = allUsers.filter(u => u.username.toLowerCase().includes(query));
+      renderUserCards(filtered);
+    });
+  </script>
+  <script src="script.js"></script>
+</body>
+</html>
