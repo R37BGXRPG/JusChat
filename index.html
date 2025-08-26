@@ -61,14 +61,14 @@
         }
 
         /* Special Theme CSS */
+        /* Applying the frosted glass effect to the body for proper backdrop filtering */
         [data-special-theme='frosted-glass-effect'] {
-            /* This is the background for the frosted glass effect, applied to the html tag */
             background: rgba(var(--bg-rgb), 0.7);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
         }
 
-        /* The wallpaper is applied only when both attributes are present */
+        /* The wallpaper is applied only when both attributes are present, on the body element */
         [data-special-theme='frosted-glass-effect'][data-wallpaper='Wallpaper_1'] {
             background-image: url('frosted_Glass1.jpg');
             background-size: cover;
@@ -86,7 +86,7 @@
 
         /* Original styles from your file */
         body {
-            /* This is the key fix: the body background is now transparent for special themes */
+            /* Now, the background is always controlled by the data attributes on the body itself */
             background: var(--bg);
             color: var(--text);
             font-family: var(--font);
@@ -100,10 +100,6 @@
             background-position: center;
             background-attachment: fixed;
             transition: background 0.3s, color 0.3s;
-        }
-        /* New rule to make the body transparent when a wallpaper is active */
-        [data-special-theme='frosted-glass-effect'] body {
-            background: transparent;
         }
         
         .main-content-wrapper {
@@ -191,35 +187,35 @@
 
         // Theming logic
         document.addEventListener('DOMContentLoaded', (event) => {
-            const htmlElement = document.documentElement;
+            const bodyElement = document.body;
 
             const savedTheme = localStorage.getItem('theme');
             const savedSpecialTheme = localStorage.getItem('specialTheme');
             const savedFont = localStorage.getItem('font');
             const savedWallpaper = localStorage.getItem('wallpaper');
 
-            // Apply the saved theme
+            // Apply the saved theme to the body
             if (savedTheme) {
-                htmlElement.setAttribute('data-theme', savedTheme);
+                bodyElement.setAttribute('data-theme', savedTheme);
             }
 
-            // Apply the saved special theme
+            // Apply the saved special theme to the body
             if (savedSpecialTheme) {
-                htmlElement.setAttribute('data-special-theme', savedSpecialTheme);
+                bodyElement.setAttribute('data-special-theme', savedSpecialTheme);
             } else {
-                htmlElement.removeAttribute('data-special-theme');
+                bodyElement.removeAttribute('data-special-theme');
             }
 
-            // Apply the saved font
+            // Apply the saved font to the body
             if (savedFont) {
-                htmlElement.setAttribute('data-font', savedFont);
+                bodyElement.setAttribute('data-font', savedFont);
             }
 
             // Apply the saved wallpaper if the special theme is active
             if (savedSpecialTheme === 'frosted-glass-effect' && savedWallpaper) {
-                htmlElement.setAttribute('data-wallpaper', savedWallpaper);
+                bodyElement.setAttribute('data-wallpaper', savedWallpaper);
             } else {
-                htmlElement.removeAttribute('data-wallpaper');
+                bodyElement.removeAttribute('data-wallpaper');
             }
         });
 
