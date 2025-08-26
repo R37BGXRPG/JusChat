@@ -1,16 +1,44 @@
 /* specialTheme.css */
 
-.frosted-glass-effect {
-  /* Use a semi-transparent background on the container to show the body background */
-  background: rgba(var(--bg-rgb), 0.7);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px); /* For Safari */
+/* Special Theme container */
+.special-theme-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Place behind other content */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
 }
 
-/* This targets specific elements to make them transparent */
-.frosted-glass-effect .settings-container,
-.frosted-glass-effect .user-item {
-  background: rgba(var(--box-bg-rgb), 0.5); /* Use transparent background for frosted effect */
-  border: 1px solid rgba(var(--border-color-rgb), 0.3);
-  box-shadow: 0 4px 20px rgba(var(--shadow-rgb), 0.1);
+/* Frosted Glass effect on the main container */
+[data-special-theme='frosted-glass-effect'] .special-theme-container {
+    background: rgba(var(--bg-rgb), 0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+/* Wallpaper backgrounds for the special theme container */
+[data-special-theme='frosted-glass-effect'][data-wallpaper='Wallpaper_1'] .special-theme-container {
+    background-image: url('frosted_Glass1.jpg');
+}
+
+[data-special-theme='frosted-glass-effect'][data-wallpaper='Wallpaper_2'] .special-theme-container {
+    background-image: url('https://placehold.co/1920x1080/4f5b66/ffffff?text=WALLPAPER+2');
+}
+
+[data-special-theme='frosted-glass-effect'][data-wallpaper='Wallpaper_3'] .special-theme-container {
+    background-image: url('https://placehold.co/1920x1080/966b9d/ffffff?text=WALLPAPER+3');
+}
+
+/* This targets specific elements to make them semi-transparent and frosted */
+[data-special-theme='frosted-glass-effect'] .settings-container,
+[data-special-theme='frosted-glass-effect'] .user-item,
+[data-special-theme='frosted-glass-effect'] header,
+[data-special-theme='frosted-glass-effect'] .auth-card {
+    background: rgba(var(--box-bg-rgb), 0.5); /* Use transparent background for frosted effect */
+    border: 1px solid rgba(var(--border-color-rgb), 0.3);
+    box-shadow: 0 4px 20px rgba(var(--shadow-rgb), 0.1);
 }
