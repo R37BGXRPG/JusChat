@@ -74,6 +74,13 @@
             border: 1px solid rgba(var(--border-color-rgb), 0.3);
             box-shadow: 0 4px 20px rgba(var(--shadow-rgb), 0.1);
         }
+        
+        /* Wallpaper Theme */
+        [data-special-theme='frosted-glass-effect'][data-wallpaper='Wallpaper_1'] {
+            background-image: url('frosted_Glass1.jpg'); /* Updated with the correct file name */
+            background-size: cover;
+            background-position: center;
+        }
 
         /* Original styles from your file */
         body {
@@ -147,49 +154,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            box-shadow: 0 4px 20px var(--shadow);
-            text-align: center;
-        }
-        .user-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 30px var(--shadow);
-        }
-        .user-avatar {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid var(--accent);
-            box-shadow: 0 2px 8px var(--shadow);
-            transition: transform 0.2s;
-        }
-        .user-name {
-            font-size: 1.3rem;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            color: var(--text);
-            margin-top: 1rem;
-        }
-        .user-item button {
-            margin-top: 1rem;
-            padding: 0.6rem 1.2rem;
-            font-size: 0.9rem;
-            font-weight: 600;
-            border-radius: 0.5rem;
-            border: none;
-            cursor: pointer;
-            background: var(--accent);
-            color: #fff;
-            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.2);
-            transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
-        }
-        .user-item button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(0, 123, 255, 0.3);
-            background: #0069d9;
-        }
-        .user-item button[disabled] {
-            background: #ccc;
+            box-shadow: 0 4-box-bg: #ccc;
             color: #666;
             cursor: default;
             box-shadow: none;
@@ -219,10 +184,12 @@
         // Theming logic
         document.addEventListener('DOMContentLoaded', (event) => {
             const htmlElement = document.documentElement;
+            const bodyElement = document.body;
 
             const savedTheme = localStorage.getItem('theme');
             const savedSpecialTheme = localStorage.getItem('specialTheme');
             const savedFont = localStorage.getItem('font');
+            const savedWallpaper = localStorage.getItem('wallpaper');
 
             // Apply the saved theme
             if (savedTheme) {
@@ -231,12 +198,21 @@
 
             // Apply the saved special theme
             if (savedSpecialTheme) {
-                htmlElement.classList.add(savedSpecialTheme);
+                htmlElement.setAttribute('data-special-theme', savedSpecialTheme);
+            } else {
+                htmlElement.removeAttribute('data-special-theme');
             }
 
             // Apply the saved font
             if (savedFont) {
                 htmlElement.setAttribute('data-font', savedFont);
+            }
+
+            // Apply the saved wallpaper if the special theme is active
+            if (savedSpecialTheme === 'frosted-glass-effect' && savedWallpaper) {
+                htmlElement.setAttribute('data-wallpaper', savedWallpaper);
+            } else {
+                htmlElement.removeAttribute('data-wallpaper');
             }
         });
 
