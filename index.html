@@ -1,304 +1,303 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>JusChat - Users</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Poppins:wght@400;700&family=Segoe+UI:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        /* Themes CSS */
-        :root {
-            --bg: #f8f9fa;
-            --bg-rgb: 248, 249, 250;
-            --box-bg: #ffffff;
-            --box-bg-rgb: 255, 255, 255;
-            --text: #343a40;
-            --accent: #6f42c1;
-            --border-color: #e9ecef;
-            --border-color-rgb: 233, 236, 239;
-            --shadow: rgba(0, 0, 0, 0.05);
-            --shadow-rgb: 0, 0, 0;
-            --font: 'Segoe UI', Arial, sans-serif;
-        }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JusChat - Users</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Poppins:wght@400;700&family=Segoe+UI:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Themes CSS */
+        :root {
+            --bg: #f8f9fa;
+            --bg-rgb: 248, 249, 250;
+            --box-bg: #ffffff;
+            --box-bg-rgb: 255, 255, 255;
+            --text: #343a40;
+            --accent: #6f42c1;
+            --border-color: #e9ecef;
+            --border-color-rgb: 233, 236, 239;
+            --shadow: rgba(0, 0, 0, 0.05);
+            --shadow-rgb: 0, 0, 0;
+            --font: 'Segoe UI', Arial, sans-serif;
+        }
 
-        [data-theme='dark'] {
-            --bg: #1e1e1e;
-            --bg-rgb: 30, 30, 30;
-            --box-bg: #2d2d2d;
-            --box-bg-rgb: 45, 45, 45;
-            --text: #e0e0e0;
-            --accent: #5e9bff;
-            --border-color: #3e3e3e;
-            --border-color-rgb: 62, 62, 62;
-            --shadow: rgba(0, 0, 0, 0.2);
-            --shadow-rgb: 0, 0, 0;
-        }
+        [data-theme='dark'] {
+            --bg: #1e1e1e;
+            --bg-rgb: 30, 30, 30;
+            --box-bg: #2d2d2d;
+            --box-bg-rgb: 45, 45, 45;
+            --text: #e0e0e0;
+            --accent: #5e9bff;
+            --border-color: #3e3e3e;
+            --border-color-rgb: 62, 62, 62;
+            --shadow: rgba(0, 0, 0, 0.2);
+            --shadow-rgb: 0, 0, 0;
+        }
 
-        [data-theme='white'] {
-            --bg: #f0f0f0;
-            --bg-rgb: 240, 240, 240;
-            --box-bg: #ffffff;
-            --box-bg-rgb: 255, 255, 255;
-            --text: #212529;
-            --accent: #007bff;
-            --border-color: #e9ecef;
-            --border-color-rgb: 233, 236, 239;
-            --shadow: rgba(0, 0, 0, 0.05);
-            --shadow-rgb: 0, 0, 0;
-        }
+        [data-theme='white'] {
+            --bg: #f0f0f0;
+            --bg-rgb: 240, 240, 240;
+            --box-bg: #ffffff;
+            --box-bg-rgb: 255, 255, 255;
+            --text: #212529;
+            --accent: #007bff;
+            --border-color: #e9ecef;
+            --border-color-rgb: 233, 236, 239;
+            --shadow: rgba(0, 0, 0, 0.05);
+            --shadow-rgb: 0, 0, 0;
+        }
 
-        /* Font themes */
-        [data-font='Poppins'] {
-            --font: 'Poppins', sans-serif;
-        }
-        [data-font='Montserrat'] {
-            --font: 'Montserrat', sans-serif;
-        }
-        [data-font='Segoe UI'] {
-            --font: 'Segoe UI', Arial, sans-serif;
-        }
+        /* Font themes */
+        [data-font='Poppins'] {
+            --font: 'Poppins', sans-serif;
+        }
+        [data-font='Montserrat'] {
+            --font: 'Montserrat', sans-serif;
+        }
+        [data-font='Segoe UI'] {
+            --font: 'Segoe UI', Arial, sans-serif;
+        }
 
-        /* Special Theme CSS */
-        .special-theme-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1; /* Place behind other content */
-        }
-        [data-special-theme='frosted-glass-effect'] .special-theme-container {
-            background: rgba(var(--bg-rgb), 0.7);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-        }
-        /* The change is here: The data-wallpaper value is now lowercase to match what is likely saved in localStorage */
-        [data-special-theme='frosted-glass-effect'][data-wallpaper='wallpaper_1'] .special-theme-container {
-            background-image: url('frosted_Glass1.jpg');
-            background-size: cover;
-            background-position: center;
-        }
+        /* Special Theme CSS */
+        .special-theme-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* Place behind other content */
+        }
+        [data-special-theme='frosted-glass-effect'] .special-theme-container {
+            background: rgba(var(--bg-rgb), 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        [data-special-theme='frosted-glass-effect'][data-wallpaper='Wallpaper_1'] .special-theme-container {
+            background-image: url('frosted_Glass1.jpg');
+            background-size: cover;
+            background-position: center;
+        }
 
-        /* Elements within the frosted glass theme need transparent backgrounds and their own blur */
-        [data-special-theme='frosted-glass-effect'] .user-item,
-        [data-special-theme='frosted-glass-effect'] .settings-button,
-        [data-special-theme='frosted-glass-effect'] header {
-            background: rgba(var(--box-bg-rgb), 0.5);
-            border: 1px solid rgba(var(--border-color-rgb), 0.3);
-            box-shadow: 0 4px 20px rgba(var(--shadow-rgb), 0.1);
-        }
+        /* Elements within the frosted glass theme need transparent backgrounds and their own blur */
+        [data-special-theme='frosted-glass-effect'] .user-item,
+        [data-special-theme='frosted-glass-effect'] .settings-button,
+        [data-special-theme='frosted-glass-effect'] header {
+            background: rgba(var(--box-bg-rgb), 0.5);
+            border: 1px solid rgba(var(--border-color-rgb), 0.3);
+            box-shadow: 0 4px 20px rgba(var(--shadow-rgb), 0.1);
+        }
 
-        /* Original styles from your file */
-        body {
-            background: var(--bg);
-            color: var(--text);
-            font-family: var(--font);
-            margin: 0;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 2rem 1rem;
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            transition: background 0.3s, color 0.3s;
-        }
-        /* Make body transparent when special theme is active to show the background div */
-        [data-special-theme='frosted-glass-effect'] body {
-            background: transparent;
-        }
+        /* Original styles from your file */
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--font);
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem 1rem;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            transition: background 0.3s, color 0.3s;
+        }
+        /* Make body transparent when special theme is active to show the background div */
+        [data-special-theme='frosted-glass-effect'] body {
+            background: transparent;
+        }
 
-        .main-content-wrapper {
-            min-height: 100vh;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        header {
-            width: 100%;
-            max-width: 800px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-        }
-        h1 {
-            color: var(--accent);
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin: 0;
-            letter-spacing: 1px;
-        }
-        .settings-button {
-            background: var(--accent);
-            color: #fff;
-            border: none;
-            border-radius: 0.5rem;
-            padding: 0.75rem 1.5rem;
-            font-weight: 600;
-            cursor: pointer;
-            font-size: 1rem;
-            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.2);
-            transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
-            text-decoration: none;
-        }
-        .settings-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(0, 123, 255, 0.3);
-            background: #0069d9;
-        }
-        #user-list {
-            width: 100%;
-            max-width: 800px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-        }
-        .user-item {
-            background: var(--box-bg);
-            border-radius: 1.5rem;
-            padding: 1.5rem;
-            cursor: default;
-            transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            box-shadow: 0 4-box-bg: #ccc;
-            color: #666;
-            cursor: default;
-            box-shadow: none;
-        }
-    </style>
+        .main-content-wrapper {
+            min-height: 100vh;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        header {
+            width: 100%;
+            max-width: 800px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        h1 {
+            color: var(--accent);
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 0;
+            letter-spacing: 1px;
+        }
+        .settings-button {
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            border-radius: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 1rem;
+            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.2);
+            transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+            text-decoration: none;
+        }
+        .settings-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 123, 255, 0.3);
+            background: #0069d9;
+        }
+        #user-list {
+            width: 100%;
+            max-width: 800px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        .user-item {
+            background: var(--box-bg);
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            cursor: default;
+            transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 4-box-bg: #ccc;
+            color: #666;
+            cursor: default;
+            box-shadow: none;
+        }
+    </style>
 </head>
 <body
-    data-theme="white"
-    data-font="Poppins"
-    data-special-theme="frosted-glass-effect"
-    data-wallpaper="Wallpaper_1"
+    data-theme="white"
+    data-font="Poppins"
+    data-special-theme="frosted-glass-effect"
+    data-wallpaper="Wallpaper_1"
 >
-    <!-- New container for the special theme background and wallpaper -->
-    <div class="special-theme-container"></div>
-    <div class="main-content-wrapper">
-        <header>
-            <h1>JusChat - Users</h1>
-            <a href="settings.html" class="settings-button">Settings</a>
-        </header>
-        <div id="user-list"></div>
-    </div>
+    <!-- New container for the special theme background and wallpaper -->
+    <div class="special-theme-container"></div>
+    <div class="main-content-wrapper">
+        <header>
+            <h1>JusChat - Users</h1>
+            <a href="settings.html" class="settings-button">Settings</a>
+        </header>
+        <div id="user-list"></div>
+    </div>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
-        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
-        import {
-            getFirestore,
-            collection,
-            getDocs,
-            getDoc,
-            doc
-        } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
+        import {
+            getFirestore,
+            collection,
+            getDocs,
+            getDoc,
+            doc
+        } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
 
-        // Theming logic
-        document.addEventListener('DOMContentLoaded', (event) => {
-            const bodyElement = document.body;
+        // Theming logic
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const bodyElement = document.body;
 
-            const savedTheme = localStorage.getItem('theme');
-            const savedSpecialTheme = localStorage.getItem('specialTheme');
-            const savedFont = localStorage.getItem('font');
-            const savedWallpaper = localStorage.getItem('wallpaper');
+            const savedTheme = localStorage.getItem('theme');
+            const savedSpecialTheme = localStorage.getItem('specialTheme');
+            const savedFont = localStorage.getItem('font');
+            const savedWallpaper = localStorage.getItem('wallpaper');
 
-            // Apply the saved theme to the body
-            if (savedTheme) {
-                bodyElement.setAttribute('data-theme', savedTheme);
-            }
+            // Apply the saved theme to the body
+            if (savedTheme) {
+                bodyElement.setAttribute('data-theme', savedTheme);
+            }
 
-            // Apply the saved special theme to the body
-            if (savedSpecialTheme) {
-                bodyElement.setAttribute('data-special-theme', savedSpecialTheme);
-            } else {
-                bodyElement.removeAttribute('data-special-theme');
-            }
+            // Apply the saved special theme to the body
+            if (savedSpecialTheme) {
+                bodyElement.setAttribute('data-special-theme', savedSpecialTheme);
+            } else {
+                bodyElement.removeAttribute('data-special-theme');
+            }
 
-            // Apply the saved font to the body
-            if (savedFont) {
-                bodyElement.setAttribute('data-font', savedFont);
-            }
+            // Apply the saved font to the body
+            if (savedFont) {
+                bodyElement.setAttribute('data-font', savedFont);
+            }
 
-            // Apply the saved wallpaper if the special theme is active
-            if (savedSpecialTheme === 'frosted-glass-effect' && savedWallpaper) {
-                bodyElement.setAttribute('data-wallpaper', savedWallpaper);
-            } else {
-                bodyElement.removeAttribute('data-wallpaper');
-            }
-        });
+            // Apply the saved wallpaper if the special theme is active
+            if (savedSpecialTheme === 'frosted-glass-effect' && savedWallpaper) {
+                bodyElement.setAttribute('data-wallpaper', savedWallpaper);
+            } else {
+                bodyElement.removeAttribute('data-wallpaper');
+            }
+        });
 
-        // Your existing Firebase logic
-        const firebaseConfig = {
-            apiKey: "AIzaSyA7OMNG2gHH2ZHhfQoWTbB6w5ZYaFCjBk8",
-            authDomain: "juschat-2a8a6.firebaseapp.com",
-            projectId: "juschat-2a8a6",
-            storageBucket: "juschat-2a8a6.appspot.com",
-            messagingSenderId: "16171982663",
-            appId: "1:16171982663:web:13cbcac9ffe732454a3662",
-            measurementId: "G-25RE5GTR3D"
-        };
+        // Your existing Firebase logic
+        const firebaseConfig = {
+            apiKey: "AIzaSyA7OMNG2gHH2ZHhfQoWTbB6w5ZYaFCjBk8",
+            authDomain: "juschat-2a8a6.firebaseapp.com",
+            projectId: "juschat-2a8a6",
+            storageBucket: "juschat-2a8a6.appspot.com",
+            messagingSenderId: "16171982663",
+            appId: "1:16171982663:web:13cbcac9ffe732454a3662",
+            measurementId: "G-25RE5GTR3D"
+        };
 
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
 
-        async function loadUsers() {
-            const userList = document.getElementById("user-list");
-            userList.innerHTML = "";
+        async function loadUsers() {
+            const userList = document.getElementById("user-list");
+            userList.innerHTML = "";
 
-            const currentUser = auth.currentUser;
-            const currentSnap = await getDoc(doc(db, "users", currentUser.uid));
-            const currentData = currentSnap.data();
-            const currentUsername = currentData.username;
-            const sent = currentData.sent || [];
-            const arrived = currentData.arrived || [];
-            const friends = currentData.friends || [];
+            const currentUser = auth.currentUser;
+            const currentSnap = await getDoc(doc(db, "users", currentUser.uid));
+            const currentData = currentSnap.data();
+            const currentUsername = currentData.username;
+            const sent = currentData.sent || [];
+            const arrived = currentData.arrived || [];
+            const friends = currentData.friends || [];
 
-            const snapshot = await getDocs(collection(db, "users"));
-            snapshot.forEach(doc => {
-                const data = doc.data();
-                const username = data.username;
-                if (username === currentUsername) return;
+            const snapshot = await getDocs(collection(db, "users"));
+            snapshot.forEach(doc => {
+                const data = doc.data();
+                const username = data.username;
+                if (username === currentUsername) return;
 
-                const avatarURL = data.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(username)}&background=random`;
+                const avatarURL = data.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(username)}&background=random`;
 
-                let actionButton = "";
-                if (friends.includes(username)) {
-                    actionButton = `<button disabled>Friends</button>`;
-                } else if (arrived.includes(username)) {
-                    actionButton = `<button onclick="acceptFriendRequest('${username}')">Accept Request</button>`;
-                } else if (sent.includes(username)) {
-                    actionButton = `<button disabled>Request Sent</button>`;
-                } else {
-                    actionButton = `<button onclick="sendFriendRequest('${username}')">Send Request</button>`;
-                }
+                let actionButton = "";
+                if (friends.includes(username)) {
+                    actionButton = `<button disabled>Friends</button>`;
+                } else if (arrived.includes(username)) {
+                    actionButton = `<button onclick="acceptFriendRequest('${username}')">Accept Request</button>`;
+                } else if (sent.includes(username)) {
+                    actionButton = `<button disabled>Request Sent</button>`;
+                } else {
+                    actionButton = `<button onclick="sendFriendRequest('${username}')">Send Request</button>`;
+                }
 
-                const card = document.createElement("div");
-                card.className = "user-item";
-                card.innerHTML = `
-                    <img src="${avatarURL}" alt="${username}" class="user-avatar">
-                    <div class="user-name">${username}</div>
-                    ${actionButton}
-                `;
-                userList.appendChild(card);
-            });
-        }
+                const card = document.createElement("div");
+                card.className = "user-item";
+                card.innerHTML = `
+                    <img src="${avatarURL}" alt="${username}" class="user-avatar">
+                    <div class="user-name">${username}</div>
+                    ${actionButton}
+                `;
+                userList.appendChild(card);
+            });
+        }
 
-        onAuthStateChanged(auth, (user) => {
-            if (!user) {
-                window.location.href = "login.html";
-            } else {
-                loadUsers();
-            }
-        });
-    </script>
+        onAuthStateChanged(auth, (user) => {
+            if (!user) {
+                window.location.href = "login.html";
+            } else {
+                loadUsers();
+            }
+        });
+    </script>
 </body>
 </html>
