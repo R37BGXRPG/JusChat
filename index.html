@@ -61,29 +61,32 @@
         }
 
         /* Special Theme CSS */
-        .frosted-glass-effect {
+        [data-special-theme='frosted-glass-effect'] {
+            /* This is the background for the frosted glass effect, applied to the html tag */
             background: rgba(var(--bg-rgb), 0.7);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
         }
 
-        .frosted-glass-effect .user-item,
-        .frosted-glass-effect .settings-button,
-        .frosted-glass-effect header {
+        /* The wallpaper is applied only when both attributes are present */
+        [data-special-theme='frosted-glass-effect'][data-wallpaper='Wallpaper_1'] {
+            background-image: url('frosted_Glass1.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        /* Elements within the frosted glass theme need transparent backgrounds and their own blur */
+        [data-special-theme='frosted-glass-effect'] .user-item,
+        [data-special-theme='frosted-glass-effect'] .settings-button,
+        [data-special-theme='frosted-glass-effect'] header {
             background: rgba(var(--box-bg-rgb), 0.5);
             border: 1px solid rgba(var(--border-color-rgb), 0.3);
             box-shadow: 0 4px 20px rgba(var(--shadow-rgb), 0.1);
         }
-        
-        /* Wallpaper Theme */
-        [data-special-theme='frosted-glass-effect'][data-wallpaper='Wallpaper_1'] {
-            background-image: url('frosted_Glass1.jpg'); /* Updated with the correct file name */
-            background-size: cover;
-            background-position: center;
-        }
 
         /* Original styles from your file */
         body {
+            /* This is the key fix: the body background is now transparent for special themes */
             background: var(--bg);
             color: var(--text);
             font-family: var(--font);
@@ -98,6 +101,11 @@
             background-attachment: fixed;
             transition: background 0.3s, color 0.3s;
         }
+        /* New rule to make the body transparent when a wallpaper is active */
+        [data-special-theme='frosted-glass-effect'] body {
+            background: transparent;
+        }
+        
         .main-content-wrapper {
             min-height: 100vh;
             width: 100%;
@@ -184,7 +192,6 @@
         // Theming logic
         document.addEventListener('DOMContentLoaded', (event) => {
             const htmlElement = document.documentElement;
-            const bodyElement = document.body;
 
             const savedTheme = localStorage.getItem('theme');
             const savedSpecialTheme = localStorage.getItem('specialTheme');
