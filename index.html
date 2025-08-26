@@ -61,20 +61,25 @@
         }
 
         /* Special Theme CSS */
-        /* Applying the frosted glass effect to the body for proper backdrop filtering */
-        [data-special-theme='frosted-glass-effect'] {
+        .special-theme-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* Place behind other content */
+        }
+        [data-special-theme='frosted-glass-effect'] .special-theme-container {
             background: rgba(var(--bg-rgb), 0.7);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
         }
-
-        /* The wallpaper is applied only when both attributes are present, on the body element */
-        [data-special-theme='frosted-glass-effect'][data-wallpaper='Wallpaper_1'] {
+        [data-special-theme='frosted-glass-effect'][data-wallpaper='Wallpaper_1'] .special-theme-container {
             background-image: url('frosted_Glass1.jpg');
             background-size: cover;
             background-position: center;
         }
-        
+
         /* Elements within the frosted glass theme need transparent backgrounds and their own blur */
         [data-special-theme='frosted-glass-effect'] .user-item,
         [data-special-theme='frosted-glass-effect'] .settings-button,
@@ -86,7 +91,6 @@
 
         /* Original styles from your file */
         body {
-            /* Now, the background is always controlled by the data attributes on the body itself */
             background: var(--bg);
             color: var(--text);
             font-family: var(--font);
@@ -101,7 +105,11 @@
             background-attachment: fixed;
             transition: background 0.3s, color 0.3s;
         }
-        
+        /* Make body transparent when special theme is active to show the background div */
+        [data-special-theme='frosted-glass-effect'] body {
+            background: transparent;
+        }
+
         .main-content-wrapper {
             min-height: 100vh;
             width: 100%;
@@ -165,7 +173,14 @@
         }
     </style>
 </head>
-<body>
+<body
+    data-theme="white"
+    data-font="Poppins"
+    data-special-theme="frosted-glass-effect"
+    data-wallpaper="Wallpaper_1"
+>
+    <!-- New container for the special theme background and wallpaper -->
+    <div class="special-theme-container"></div>
     <div class="main-content-wrapper">
         <header>
             <h1>JusChat - Users</h1>
