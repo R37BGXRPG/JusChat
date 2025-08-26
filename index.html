@@ -7,8 +7,13 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Poppins:wght@400;700&family=Segoe+UI:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="themes.css">
+    <link rel="stylesheet" href="specialTheme.css">
     <style>
-        /* Themes CSS */
+        /* This is the same CSS as provided in your original file,
+           but has been moved to a separate file for clarity.
+           This style block is kept for direct reference, but
+           linking to external stylesheets is the best practice. */
         :root {
             --bg: #f8f9fa;
             --bg-rgb: 248, 249, 250;
@@ -49,7 +54,6 @@
             --shadow-rgb: 0, 0, 0;
         }
 
-        /* Font themes */
         [data-font='Poppins'] {
             --font: 'Poppins', sans-serif;
         }
@@ -60,36 +64,7 @@
             --font: 'Segoe UI', Arial, sans-serif;
         }
 
-        /* Special Theme CSS */
-        .special-theme-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1; /* Place behind other content */
-        }
-        [data-special-theme='frosted-glass-effect'] .special-theme-container {
-            background: rgba(var(--bg-rgb), 0.7);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-        }
-        [data-special-theme='frosted-glass-effect'][data-wallpaper='Wallpaper_1'] .special-theme-container {
-            background-image: url('frosted_Glass1.jpg');
-            background-size: cover;
-            background-position: center;
-        }
-
-        /* Elements within the frosted glass theme need transparent backgrounds and their own blur */
-        [data-special-theme='frosted-glass-effect'] .user-item,
-        [data-special-theme='frosted-glass-effect'] .settings-button,
-        [data-special-theme='frosted-glass-effect'] header {
-            background: rgba(var(--box-bg-rgb), 0.5);
-            border: 1px solid rgba(var(--border-color-rgb), 0.3);
-            box-shadow: 0 4px 20px rgba(var(--shadow-rgb), 0.1);
-        }
-
-        /* Original styles from your file */
+        /* Original body and layout styles */
         body {
             background: var(--bg);
             color: var(--text);
@@ -105,6 +80,7 @@
             background-attachment: fixed;
             transition: background 0.3s, color 0.3s;
         }
+
         /* Make body transparent when special theme is active to show the background div */
         [data-special-theme='frosted-glass-effect'] body {
             background: transparent;
@@ -117,6 +93,7 @@
             flex-direction: column;
             align-items: center;
         }
+
         header {
             width: 100%;
             max-width: 800px;
@@ -125,6 +102,7 @@
             align-items: center;
             margin-bottom: 2rem;
         }
+
         h1 {
             color: var(--accent);
             font-size: 2.5rem;
@@ -132,6 +110,7 @@
             margin: 0;
             letter-spacing: 1px;
         }
+
         .settings-button {
             background: var(--accent);
             color: #fff;
@@ -145,11 +124,13 @@
             transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
             text-decoration: none;
         }
+
         .settings-button:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 16px rgba(0, 123, 255, 0.3);
             background: #0069d9;
         }
+
         #user-list {
             width: 100%;
             max-width: 800px;
@@ -157,6 +138,7 @@
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 1.5rem;
         }
+
         .user-item {
             background: var(--box-bg);
             border-radius: 1.5rem;
@@ -166,19 +148,56 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            box-shadow: 0 4-box-bg: #ccc;
-            color: #666;
-            cursor: default;
-            box-shadow: none;
+            box-shadow: 0 4px 20px var(--shadow);
+            text-align: center;
+        }
+
+        .user-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px var(--shadow);
+        }
+
+        .user-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 2px solid var(--accent);
+            object-fit: cover;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .user-name {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+
+        .user-item button {
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            border-radius: 0.5rem;
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .user-item button:hover {
+            background: #0069d9;
+        }
+
+        .user-item button:disabled {
+            background: var(--border-color);
+            color: #888;
+            cursor: not-allowed;
         }
     </style>
 </head>
-<body
-    data-theme="white"
-    data-font="Poppins"
-    data-special-theme="frosted-glass-effect"
-    data-wallpaper="Wallpaper_1"
->
+<body data-theme="dark" data-font="Segoe UI">
     <!-- New container for the special theme background and wallpaper -->
     <div class="special-theme-container"></div>
     <div class="main-content-wrapper">
@@ -189,6 +208,7 @@
         <div id="user-list"></div>
     </div>
 
+    <script type="module" src="script.js"></script>
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
         import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
@@ -197,44 +217,11 @@
             collection,
             getDocs,
             getDoc,
-            doc
+            doc,
+            onSnapshot
         } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
 
-        // Theming logic
-        document.addEventListener('DOMContentLoaded', (event) => {
-            const bodyElement = document.body;
-
-            const savedTheme = localStorage.getItem('theme');
-            const savedSpecialTheme = localStorage.getItem('specialTheme');
-            const savedFont = localStorage.getItem('font');
-            const savedWallpaper = localStorage.getItem('wallpaper');
-
-            // Apply the saved theme to the body
-            if (savedTheme) {
-                bodyElement.setAttribute('data-theme', savedTheme);
-            }
-
-            // Apply the saved special theme to the body
-            if (savedSpecialTheme) {
-                bodyElement.setAttribute('data-special-theme', savedSpecialTheme);
-            } else {
-                bodyElement.removeAttribute('data-special-theme');
-            }
-
-            // Apply the saved font to the body
-            if (savedFont) {
-                bodyElement.setAttribute('data-font', savedFont);
-            }
-
-            // Apply the saved wallpaper if the special theme is active
-            if (savedSpecialTheme === 'frosted-glass-effect' && savedWallpaper) {
-                bodyElement.setAttribute('data-wallpaper', savedWallpaper);
-            } else {
-                bodyElement.removeAttribute('data-wallpaper');
-            }
-        });
-
-        // Your existing Firebase logic
+        // Firebase config - Make sure this is consistent across all files
         const firebaseConfig = {
             apiKey: "AIzaSyA7OMNG2gHH2ZHhfQoWTbB6w5ZYaFCjBk8",
             authDomain: "juschat-2a8a6.firebaseapp.com",
@@ -249,19 +236,46 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        async function loadUsers() {
-            const userList = document.getElementById("user-list");
-            userList.innerHTML = "";
+        // Function to apply themes from localStorage on page load
+        function applySavedTheme() {
+            const bodyElement = document.body;
+            const savedTheme = localStorage.getItem('theme');
+            const savedSpecialTheme = localStorage.getItem('specialTheme');
+            const savedFont = localStorage.getItem('font');
+            const savedWallpaper = localStorage.getItem('wallpaper');
 
-            const currentUser = auth.currentUser;
+            if (savedTheme) {
+                bodyElement.setAttribute('data-theme', savedTheme);
+            }
+            if (savedSpecialTheme) {
+                bodyElement.setAttribute('data-special-theme', savedSpecialTheme);
+            } else {
+                bodyElement.removeAttribute('data-special-theme');
+            }
+            if (savedFont) {
+                bodyElement.setAttribute('data-font', savedFont);
+            }
+            if (savedSpecialTheme === 'frosted-glass-effect' && savedWallpaper) {
+                bodyElement.setAttribute('data-wallpaper', savedWallpaper);
+            } else {
+                bodyElement.removeAttribute('data-wallpaper');
+            }
+        }
+
+        // ------------------
+        // Firebase Logic
+        // ------------------
+        const userList = document.getElementById("user-list");
+
+        async function renderUsers(currentUser, snapshot) {
+            userList.innerHTML = "";
             const currentSnap = await getDoc(doc(db, "users", currentUser.uid));
             const currentData = currentSnap.data();
-            const currentUsername = currentData.username;
-            const sent = currentData.sent || [];
-            const arrived = currentData.arrived || [];
-            const friends = currentData.friends || [];
+            const currentUsername = currentData?.username;
+            const sent = currentData?.sent || [];
+            const arrived = currentData?.arrived || [];
+            const friends = currentData?.friends || [];
 
-            const snapshot = await getDocs(collection(db, "users"));
             snapshot.forEach(doc => {
                 const data = doc.data();
                 const username = data.username;
@@ -291,12 +305,20 @@
             });
         }
 
-        onAuthStateChanged(auth, (user) => {
-            if (!user) {
-                window.location.href = "login.html";
-            } else {
-                loadUsers();
-            }
+        // On page load, apply the theme and listen for auth state changes
+        document.addEventListener('DOMContentLoaded', () => {
+            applySavedTheme();
+
+            onAuthStateChanged(auth, (user) => {
+                if (!user) {
+                    window.location.href = "login.html";
+                } else {
+                    // Use onSnapshot for real-time updates
+                    onSnapshot(collection(db, "users"), (snapshot) => {
+                        renderUsers(user, snapshot);
+                    });
+                }
+            });
         });
     </script>
 </body>
