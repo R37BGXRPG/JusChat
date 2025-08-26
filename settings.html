@@ -144,6 +144,13 @@
                 </select>
             </div>
         </div>
+
+        <!-- Back Button -->
+        <div class="flex justify-center mt-6">
+            <button id="back-button" class="px-6 py-3 bg-gray-500 text-white rounded-full hover:bg-gray-600 transition-colors duration-300">
+                Back
+            </button>
+        </div>
     </div>
 
     <!-- The script for handling themes and other functionalities -->
@@ -153,6 +160,7 @@
             const themeSelect = document.getElementById('theme-select');
             const specialThemeSelect = document.getElementById('special-theme-select');
             const fontSelect = document.getElementById('font-select');
+            const backButton = document.getElementById('back-button');
             const htmlElement = document.documentElement;
 
             // Retrieve and apply saved theme settings from local storage
@@ -210,6 +218,13 @@
                     const selectedFont = e.target.value;
                     htmlElement.setAttribute('data-font', selectedFont);
                     localStorage.setItem('font', selectedFont);
+                });
+            }
+
+            // Add event listener for the back button
+            if (backButton) {
+                backButton.addEventListener('click', () => {
+                    window.location.href = 'index.html';
                 });
             }
         });
