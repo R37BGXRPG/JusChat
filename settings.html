@@ -4,12 +4,65 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>JusChat - Settings</title>
-    <link rel="stylesheet" href="fonts.css">
-    <link rel="stylesheet" href="themes.css">
-    <link rel="stylesheet" href="specialTheme.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Poppins:wght@400;700&family=Segoe+UI:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Original styles from your file */
+        /* Define color variables for theming */
+        :root {
+            --bg: #f8f9fa;
+            --bg-rgb: 248, 249, 250;
+            --box-bg: #ffffff;
+            --box-bg-rgb: 255, 255, 255;
+            --text: #343a40;
+            --accent: #6f42c1;
+            --border-color: #e9ecef;
+            --border-color-rgb: 233, 236, 239;
+            --shadow: rgba(0, 0, 0, 0.05);
+            --shadow-rgb: 0, 0, 0;
+            --font: 'Segoe UI', Arial, sans-serif;
+        }
+
+        /* Dark theme variables */
+        [data-theme='dark'] {
+            --bg: #1e1e1e;
+            --bg-rgb: 30, 30, 30;
+            --box-bg: #2d2d2d;
+            --box-bg-rgb: 45, 45, 45;
+            --text: #e0e0e0;
+            --accent: #5e9bff;
+            --border-color: #3e3e3e;
+            --border-color-rgb: 62, 62, 62;
+            --shadow: rgba(0, 0, 0, 0.2);
+            --shadow-rgb: 0, 0, 0;
+        }
+
+        /* White theme variables */
+        [data-theme='white'] {
+            --bg: #f0f0f0;
+            --bg-rgb: 240, 240, 240;
+            --box-bg: #ffffff;
+            --box-bg-rgb: 255, 255, 255;
+            --text: #212529;
+            --accent: #007bff;
+            --border-color: #e9ecef;
+            --border-color-rgb: 233, 236, 239;
+            --shadow: rgba(0, 0, 0, 0.05);
+            --shadow-rgb: 0, 0, 0;
+        }
+
+        /* Font family variables */
+        [data-font='Poppins'] { --font: 'Poppins', sans-serif; }
+        [data-font='Montserrat'] { --font: 'Montserrat', sans-serif; }
+        [data-font='Segoe UI'] { --font: 'Segoe UI', Arial, sans-serif; }
+
+        /* Wallpaper variables */
+        [data-wallpaper='Wallpaper_1'] { --wallpaper: url(https://placehold.co/1920x1080/4F46E5/ffffff?text=Wallpaper+1); }
+        [data-wallpaper='Wallpaper_2'] { --wallpaper: url(https://placehold.co/1920x1080/0F172A/ffffff?text=Wallpaper+2); }
+        [data-wallpaper='Wallpaper_3'] { --wallpaper: url(https://placehold.co/1920x1080/E11D48/ffffff?text=Wallpaper+3); }
+
+        /* General styles from your original file */
         body {
             background-color: var(--bg);
             color: var(--text);
@@ -25,22 +78,39 @@
             transition: background-color 0.3s, color 0.3s, border-color 0.3s, box-shadow 0.3s;
         }
 
+        /* Frosted Glass Effect */
+        .special-theme-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            transition: all 0.5s ease-in-out;
+            background-image: var(--wallpaper, none);
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .frosted-glass-effect .special-theme-container {
+            background-image: var(--wallpaper);
+        }
+
         .frosted-glass-effect .settings-container,
         .frosted-glass-effect .user-item {
             background: rgba(var(--box-bg-rgb), 0.5);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             border: 1px solid rgba(var(--border-color-rgb), 0.3);
             box-shadow: 0 4px 20px rgba(var(--shadow-rgb), 0.1);
         }
 
         .frosted-glass-effect .settings-select {
             background: rgba(var(--box-bg-rgb), 0.7);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
             border: 1px solid rgba(var(--border-color-rgb), 0.3);
             box-shadow: 0 4px 20px rgba(var(--shadow-rgb), 0.1);
-        }
-
-        /* Make body transparent when special theme is active to show the background div */
-        [data-special-theme='frosted-glass-effect'] body {
-            background: transparent;
         }
     </style>
 </head>
@@ -52,12 +122,12 @@
 
         <!-- User Profile -->
         <div class="user-item p-4 sm:p-6 rounded-xl flex items-center mb-6">
-            <img src="https://placehold.co/80x80/6f42c1/ffffff?text=U" alt="User Profile" class="w-16 h-16 rounded-full border-2 border-accent">
+            <img id="user-avatar" src="https://placehold.co/80x80/6f42c1/ffffff?text=U" alt="User Profile" class="w-16 h-16 rounded-full border-2 border-accent">
             <div class="ml-4 flex-grow">
                 <p class="font-semibold text-lg" id="username">User Name</p>
                 <p class="text-sm text-gray-500" id="email">user@example.com</p>
             </div>
-            <button class="px-4 py-2 bg-accent text-white rounded-full hover:opacity-80 transition-opacity duration-300">Edit Profile</button>
+            <button id="edit-profile-button" class="px-4 py-2 bg-accent text-white rounded-full hover:opacity-80 transition-opacity duration-300">Edit Profile</button>
         </div>
 
         <!-- Theme Settings -->
@@ -81,6 +151,7 @@
             <div>
                 <label for="wallpaper-select" class="block font-medium mb-2">Wallpaper</label>
                 <select id="wallpaper-select" class="w-full p-3 rounded-xl border border-border-color bg-box-bg text-text settings-select">
+                    <option value="none">None</option>
                     <option value="Wallpaper_1">Wallpaper 1</option>
                     <option value="Wallpaper_2">Wallpaper 2</option>
                     <option value="Wallpaper_3">Wallpaper 3</option>
@@ -107,11 +178,32 @@
         </div>
     </div>
 
+    <!-- Edit Profile Modal -->
+    <div id="edit-profile-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-zinc-800 p-8 rounded-xl w-full max-w-md shadow-lg transform transition-all sm:my-8 sm:align-middle sm:max-w-md sm:w-full">
+            <h2 class="text-xl font-bold mb-4 text-center text-text dark:text-white">Edit Profile</h2>
+            <form id="edit-profile-form">
+                <div class="mb-4">
+                    <label for="new-username" class="block text-text dark:text-gray-200 mb-2">Username</label>
+                    <input type="text" id="new-username" class="w-full p-2 border rounded-md focus:ring focus:ring-accent focus:border-accent bg-box-bg text-text settings-select" placeholder="Enter new username">
+                </div>
+                <div class="mb-4">
+                    <label for="new-photo-url" class="block text-text dark:text-gray-200 mb-2">Profile Picture URL</label>
+                    <input type="url" id="new-photo-url" class="w-full p-2 border rounded-md focus:ring focus:ring-accent focus:border-accent bg-box-bg text-text settings-select" placeholder="Enter new photo URL">
+                </div>
+                <div class="flex justify-between mt-6">
+                    <button type="button" id="cancel-edit-button" class="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600">Cancel</button>
+                    <button type="submit" id="save-profile-button" class="px-4 py-2 bg-accent text-white rounded-md hover:opacity-80">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- Firebase + Theme Logic -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
-        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
-        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
+        import { getAuth, onAuthStateChanged, signOut, updateProfile } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
+        import { getFirestore, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyA7OMNG2gHH2ZHhfQoWTbB6w5ZYaFCjBk8",
@@ -127,129 +219,173 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
+        // --- DOM Elements ---
+        const usernameEl = document.getElementById("username");
+        const emailEl = document.getElementById("email");
+        const userAvatarEl = document.getElementById("user-avatar");
+        const themeSelect = document.getElementById("theme-select");
+        const specialThemeSelect = document.getElementById("special-theme-select");
+        const wallpaperSelect = document.getElementById("wallpaper-select");
+        const fontSelect = document.getElementById("font-select");
+        const editProfileButton = document.getElementById("edit-profile-button");
+        const backButton = document.getElementById("back-button");
+        const logoutButton = document.getElementById("logout-button");
+        
+        // --- Modal Elements ---
+        const editProfileModal = document.getElementById("edit-profile-modal");
+        const newUsernameInput = document.getElementById("new-username");
+        const newPhotoUrlInput = document.getElementById("new-photo-url");
+        const editProfileForm = document.getElementById("edit-profile-form");
+        const cancelEditButton = document.getElementById("cancel-edit-button");
+
         // Function to apply themes from localStorage on page load
         function applySavedTheme() {
             const bodyElement = document.body;
+            const htmlElement = document.documentElement;
+
             const savedTheme = localStorage.getItem('theme');
             const savedSpecialTheme = localStorage.getItem('specialTheme');
             const savedFont = localStorage.getItem('font');
             const savedWallpaper = localStorage.getItem('wallpaper');
 
             if (savedTheme) {
-                bodyElement.setAttribute('data-theme', savedTheme);
+                htmlElement.setAttribute('data-theme', savedTheme);
+                themeSelect.value = savedTheme;
             }
             if (savedSpecialTheme) {
-                bodyElement.setAttribute('data-special-theme', savedSpecialTheme);
+                htmlElement.setAttribute('data-special-theme', savedSpecialTheme);
+                specialThemeSelect.value = savedSpecialTheme;
             } else {
-                bodyElement.removeAttribute('data-special-theme');
+                htmlElement.removeAttribute('data-special-theme');
+                specialThemeSelect.value = "none";
             }
             if (savedFont) {
-                bodyElement.setAttribute('data-font', savedFont);
+                htmlElement.setAttribute('data-font', savedFont);
+                fontSelect.value = savedFont;
             }
             if (savedSpecialTheme === 'frosted-glass-effect' && savedWallpaper) {
-                bodyElement.setAttribute('data-wallpaper', savedWallpaper);
+                htmlElement.setAttribute('data-wallpaper', savedWallpaper);
+                wallpaperSelect.value = savedWallpaper;
             } else {
-                bodyElement.removeAttribute('data-wallpaper');
+                htmlElement.removeAttribute('data-wallpaper');
+                wallpaperSelect.value = "none";
             }
         }
-        
-        document.addEventListener('DOMContentLoaded', () => {
-            applySavedTheme();
 
-            onAuthStateChanged(auth, async (user) => {
-                if (!user) {
-                    window.location.href = "login.html";
-                    return;
-                }
-
-                const userRef = doc(db, "users", user.uid);
-                const userSnap = await getDoc(userRef);
-                const data = userSnap.data();
-
-                const username = data?.username || "Unknown";
-                const email = user.email || "No email";
-                const avatarURL = user.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(username)}&background=random`;
-
-                document.querySelector(".user-item img").src = avatarURL;
-                document.getElementById("username").textContent = username;
-                document.getElementById("email").textContent = email;
-            });
-        });
-
-        document.getElementById("back-button").addEventListener("click", () => {
-            window.location.href = "index.html";
-        });
-
-        document.getElementById("logout-button").addEventListener("click", async () => {
-            await signOut(auth);
-            window.location.href = "login.html";
-        });
-
-        const htmlElement = document.documentElement;
-        const themeSelect = document.getElementById("theme-select");
-        const specialThemeSelect = document.getElementById("special-theme-select");
-        const wallpaperSelect = document.getElementById("wallpaper-select"); // New
-        const fontSelect = document.getElementById("font-select");
-
-        const savedTheme = localStorage.getItem("theme");
-        const savedSpecialTheme = localStorage.getItem("specialTheme");
-        const savedWallpaper = localStorage.getItem("wallpaper"); // New
-        const savedFont = localStorage.getItem("font");
-
-        if (savedTheme) {
-            htmlElement.setAttribute("data-theme", savedTheme);
-            themeSelect.value = savedTheme;
-        }
-        if (savedSpecialTheme) {
-            htmlElement.setAttribute('data-special-theme', savedSpecialTheme);
-            specialThemeSelect.value = savedSpecialTheme;
-        } else {
-            htmlElement.removeAttribute('data-special-theme');
-        }
-        if (savedWallpaper) { // New
-            htmlElement.setAttribute("data-wallpaper", savedWallpaper);
-            wallpaperSelect.value = savedWallpaper;
-        }
-        if (savedFont) {
-            htmlElement.setAttribute("data-font", savedFont);
-            fontSelect.value = savedFont;
-        }
-
+        // --- Event Listeners for Theme Settings ---
         themeSelect.addEventListener("change", (e) => {
             const selected = e.target.value;
-            htmlElement.setAttribute("data-theme", selected);
             localStorage.setItem("theme", selected);
-            // Apply the change immediately
             applySavedTheme();
         });
 
         specialThemeSelect.addEventListener("change", (e) => {
             const selected = e.target.value;
             if (selected !== "none") {
-                htmlElement.setAttribute('data-special-theme', selected);
                 localStorage.setItem("specialTheme", selected);
             } else {
-                htmlElement.removeAttribute('data-special-theme');
                 localStorage.removeItem("specialTheme");
             }
-            // Apply the change immediately
             applySavedTheme();
         });
 
-        wallpaperSelect.addEventListener("change", (e) => { // New
+        wallpaperSelect.addEventListener("change", (e) => {
             const selected = e.target.value;
-            htmlElement.setAttribute("data-wallpaper", selected);
-            localStorage.setItem("wallpaper", selected);
-            // Apply the change immediately
+            if (selected !== "none") {
+                localStorage.setItem("wallpaper", selected);
+            } else {
+                localStorage.removeItem("wallpaper");
+            }
             applySavedTheme();
         });
 
         fontSelect.addEventListener("change", (e) => {
             const selected = e.target.value;
-            htmlElement.setAttribute("data-font", selected);
             localStorage.setItem("font", selected);
-            // Apply the change immediately
             applySavedTheme();
+        });
+
+        // --- Profile Editing Modal Logic ---
+        editProfileButton.addEventListener("click", () => {
+            const user = auth.currentUser;
+            if (user) {
+                // Populate the modal with the current user's info
+                newUsernameInput.value = user.displayName || "";
+                newPhotoUrlInput.value = user.photoURL || "";
+                editProfileModal.classList.remove("hidden");
+            }
+        });
+
+        cancelEditButton.addEventListener("click", () => {
+            editProfileModal.classList.add("hidden");
+        });
+
+        editProfileForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const user = auth.currentUser;
+            if (!user) return;
+
+            const newUsername = newUsernameInput.value;
+            const newPhotoUrl = newPhotoUrlInput.value;
+
+            try {
+                // 1. Update Firebase Auth Profile
+                await updateProfile(user, {
+                    displayName: newUsername,
+                    photoURL: newPhotoUrl
+                });
+
+                // 2. Update Firestore Document to keep user data in sync
+                const userDocRef = doc(db, "users", user.uid);
+                await updateDoc(userDocRef, {
+                    username: newUsername,
+                    photoURL: newPhotoUrl
+                });
+
+                // 3. Update the UI to reflect the new data
+                usernameEl.textContent = newUsername;
+                userAvatarEl.src = newPhotoUrl || `https://ui-avatars.com/api/?name=${encodeURIComponent(newUsername)}&background=random`;
+
+                // 4. Hide the modal on success
+                editProfileModal.classList.add("hidden");
+
+                console.log("Profile updated successfully!");
+
+            } catch (error) {
+                console.error("Error updating profile:", error);
+                // Handle error (e.g., show an error message to the user)
+            }
+        });
+
+        // --- Navigation and Authentication Logic ---
+        document.addEventListener('DOMContentLoaded', () => {
+            applySavedTheme();
+            onAuthStateChanged(auth, async (user) => {
+                if (!user) {
+                    window.location.href = "login.html";
+                    return;
+                }
+                const userRef = doc(db, "users", user.uid);
+                const userSnap = await getDoc(userRef);
+                const data = userSnap.data();
+
+                const username = data?.username || user.displayName || "Unknown";
+                const email = user.email || "No email";
+                const avatarURL = data?.photoURL || user.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(username)}&background=random`;
+
+                usernameEl.textContent = username;
+                emailEl.textContent = email;
+                userAvatarEl.src = avatarURL;
+            });
+        });
+
+        backButton.addEventListener("click", () => {
+            window.location.href = "index.html";
+        });
+
+        logoutButton.addEventListener("click", async () => {
+            await signOut(auth);
+            window.location.href = "login.html";
         });
     </script>
 </body>
