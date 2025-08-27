@@ -64,23 +64,31 @@
             position: relative;
             overflow: hidden;
             z-index: 10;
+            background-color: white;
+            transition: color 0.4s ease-in-out;
         }
 
         .google-btn::before {
             content: '';
             position: absolute;
             top: 0;
-            left: -100%; /* Start off-screen to the left */
+            left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, #4285F4 25%, #EA4335 25%, #EA4335 50%, #FBBC05 50%, #FBBC05 75%, #34A853 75%);
+            /* The gradient now uses the user's specified colors and percentages */
+            background: linear-gradient(90deg, #EA4335 25%, #FBBC05 25%, #FBBC05 45%, #34A853 45%, #34A853 70%, #4285F4 70%);
             background-size: 400% 100%;
-            transition: left 0.4s ease-in-out;
+            background-position: 100% 0; /* Start the background off-screen to the right */
+            transition: background-position 0.4s ease-in-out;
             z-index: -1;
         }
 
+        .google-btn:hover {
+            color: white; /* Change text to white on hover */
+        }
+
         .google-btn:hover::before {
-            left: 0; /* Slide in on hover */
+            background-position: 0 0; /* Slide the background to the left on hover */
         }
         
         .google-icon {
@@ -117,7 +125,7 @@
 
         <!-- Social Login Buttons -->
         <div id="social-login" class="space-y-4 mt-6">
-            <button id="google-login" class="google-btn w-full p-3 rounded-md bg-white text-gray-700 font-semibold border border-gray-300 relative flex items-center justify-center space-x-2 transition-all duration-300 ease-in-out hover:text-white">
+            <button id="google-login" class="google-btn w-full p-3 rounded-md text-gray-700 font-semibold border border-gray-300 relative flex items-center justify-center space-x-2">
                 <span class="google-icon"></span>
                 <span>Sign in with Google</span>
             </button>
